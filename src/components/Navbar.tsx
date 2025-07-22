@@ -25,7 +25,7 @@ const Navbar = () => {
             className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent 
                          transition-all duration-300 group-hover:from-blue-500 group-hover:via-purple-600 group-hover:to-pink-600"
           >
-            <img src="/logo.png" width={60} />
+            <img width={60} src={`${import.meta.env.BASE_URL}logo.png`} />
           </span>
           <span
             className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 

@@ -121,7 +121,7 @@ const Hero = () => {
         {/* Background Image with Gradient Overlay */}
         <div className="absolute right-0 top-0 h-full w-full max-w-2xl pointer-events-none select-none">
           <img
-            src="/HeroBanner.png"
+            src={`${import.meta.env.BASE_URL}HeroBanner.png`}
             alt=""
             className="w-full h-full object-contain object-right opacity-20"
             draggable="false"

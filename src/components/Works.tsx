@@ -297,13 +297,19 @@ const Works = () => {
                       rel="noopener noreferrer"
                     >
                       <img
-                        src={work.imageUrl}
+                        src={
+                          work.imageUrl
+                            ? `${
+                                import.meta.env.BASE_URL
+                              }${work.imageUrl.replace(/^\//, "")}`
+                            : `${import.meta.env.BASE_URL}fallback-image.png`
+                        }
                         alt={`${work.institution} project`}
                         className="w-full h-40 object-cover rounded-lg mb-4"
                         onError={(e) => {
-                          // Fallback if image fails to load
-                          (e.target as HTMLImageElement).src =
-                            "/fallback-image.png";
+                          (e.target as HTMLImageElement).src = `${
+                            import.meta.env.BASE_URL
+                          }fallback-image.png`;
                           (e.target as HTMLImageElement).alt =
                             "Image not available";
                         }}

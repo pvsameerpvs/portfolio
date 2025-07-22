@@ -12,7 +12,7 @@ const ResumePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleDownload = () => {
-    window.open("/resume.pdf", "_blank");
+    window.open(`${import.meta.env.BASE_URL}resume.pdf`, "_blank");
   };
 
   const nextPage = () => {
@@ -83,7 +83,9 @@ const ResumePage = () => {
               ${isBlurred ? "backdrop-blur-xl" : "backdrop-blur-none"}`}
         >
           <img
-            src={currentPage === 1 ? "/resume-one.png" : "/resume-two.png"}
+            src={`${import.meta.env.BASE_URL}${
+              currentPage === 1 ? "resume-one.png" : "resume-two.png"
+            }`}
             className={`absolute inset-0 w-full h-full object-contain 
                 ${isBlurred ? "filter blur-lg" : ""}`}
             alt={`Resume Page ${currentPage}`}
