@@ -1,15 +1,29 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Mail, Send, ExternalLink, MessageSquare, Check } from "lucide-react";
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  name: string;
+  email: string;
+  message: string;
+};
 
 const Contact = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
   });
-  const [, setEmailError] = useState("");
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -57,19 +71,10 @@ const Contact = () => {
   const inputFocusStyle =
     "focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 focus:bg-white/10";
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setEmailError("Please enter a valid email.");
-      alert("Invalid email address");
-      return;
-    }
-
-    setEmailError("");
+  const onSubmit = (data: FormData) => {
+    console.log("Form submitted:", data);
     setShowPopup(true);
-    setFormData({ name: "", email: "", message: "" });
+    reset();
   };
 
   return (
@@ -163,44 +168,68 @@ const Contact = () => {
         <motion.div variants={itemVariants} className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl -z-10" />
           <motion.form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="relative max-w-md mx-auto space-y-6 p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10"
           >
             <div className="space-y-2">
               <label className="text-sm text-gray-400 ml-1">Your Name</label>
               <input
+                {...register("name", { required: "Name is required" })}
                 type="text"
                 placeholder="John Doe"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                className={`w-full p-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 outline-none transition-all duration-300 ${inputFocusStyle}`}
+                className={`w-full p-3 rounded-lg bg-white/5 border ${
+                  errors.name ? "border-red-500/50" : "border-white/10"
+                } text-white placeholder-gray-500 outline-none transition-all duration-300 ${inputFocusStyle}`}
               />
+              {errors.name && (
+                <p className="text-red-400 text-sm mt-1 ml-1">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <label className="text-sm text-gray-400 ml-1">Your Email</label>
               <input
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Please enter a valid email",
+                  },
+                })}
                 type="email"
                 placeholder="john@example.com"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className={`w-full p-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 outline-none transition-all duration-300 ${inputFocusStyle}`}
+                className={`w-full p-3 rounded-lg bg-white/5 border ${
+                  errors.email ? "border-red-500/50" : "border-white/10"
+                } text-white placeholder-gray-500 outline-none transition-all duration-300 ${inputFocusStyle}`}
               />
+              {errors.email && (
+                <p className="text-red-400 text-sm mt-1 ml-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <label className="text-sm text-gray-400 ml-1">Your Message</label>
               <textarea
+                {...register("message", {
+                  required: "Message is required",
+                  minLength: {
+                    value: 10,
+                    message: "Message should be at least 10 characters",
+                  },
+                })}
                 rows={5}
                 placeholder="Hi, I'd like to talk about..."
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-                className={`w-full p-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 outline-none resize-none transition-all duration-300 ${inputFocusStyle}`}
+                className={`w-full p-3 rounded-lg bg-white/5 border ${
+                  errors.message ? "border-red-500/50" : "border-white/10"
+                } text-white placeholder-gray-500 outline-none resize-none transition-all duration-300 ${inputFocusStyle}`}
               ></textarea>
+              {errors.message && (
+                <p className="text-red-400 text-sm mt-1 ml-1">
+                  {errors.message.message}
+                </p>
+              )}
             </div>
             <motion.button
               type="submit"

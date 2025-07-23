@@ -243,7 +243,7 @@ const Works = () => {
           className="text-center mb-12"
         >
           <h2 className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 text-transparent bg-clip-text">
-            My Projects
+            Works
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             A collection of my creative and professional work, highlighting a

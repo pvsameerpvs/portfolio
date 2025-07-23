@@ -11,7 +11,7 @@ const Navbar = () => {
     "Home",
     "About",
     "Experience",
-    "Project",
+    "Works",
     "Resume",
     "Contact",
   ];
