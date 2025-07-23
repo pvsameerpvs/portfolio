@@ -59,17 +59,18 @@ const Hero = () => {
     { name: "Next.js", color: "from-gray-700 to-black" },
     { name: "React Native", color: "from-sky-500 to-indigo-500" },
     { name: "Expo", color: "from-red-500 to-rose-600" },
+    { name: "JavaScript", color: "from-red-500 to-rose-600" },
     { name: "TypeScript", color: "from-blue-400 to-indigo-500" },
     { name: "Tailwind CSS", color: "from-teal-400 to-cyan-500" },
-    { name: "Vue.js", color: "from-emerald-400 to-green-500" },
-    { name: "Angular", color: "from-red-500 to-rose-600" },
-    { name: "Svelte", color: "from-orange-500 to-red-500" },
+    { name: "Bootstrap", color: "from-purple-500 to-indigo-500" },
+    { name: "JavaScript", color: "from-red-500 to-rose-600" },
+    { name: "CSS", color: "from-orange-500 to-red-500" },
     { name: "Sass", color: "from-pink-400 to-rose-500" },
     { name: "WordPress", color: "from-teal-400 to-cyan-500" },
-    { name: "Chakra UI", color: "from-purple-500 to-indigo-500" },
+    { name: "Chakra UI", color: "from-emerald-400 to-green-500" },
 
     // Backend
-    { name: "Node.js", color: "from-green-400 to-emerald-500" },
+    { name: "Node.js", color: "from-purple-400 to-pink-500" },
     { name: "MongoDB", color: "from-green-500 to-green-700" },
     { name: "SQL", color: "from-yellow-400 to-orange-500" },
     { name: "Redux", color: "from-purple-400 to-violet-500" },
@@ -119,13 +120,69 @@ const Hero = () => {
         />
 
         {/* Background Image with Gradient Overlay */}
+        {/* Glitch Image with Blur and Reduced Brightness */}
         <div className="absolute right-0 top-0 h-full w-full max-w-2xl pointer-events-none select-none">
-          <img
-            src={`${import.meta.env.BASE_URL}HeroBanner.png`}
-            alt=""
-            className="w-full h-full object-contain object-right opacity-20"
-            draggable="false"
-          />
+          {/* Dim & Blur Wrapper */}
+          <div
+            className="w-full h-full relative"
+            style={{ filter: "brightness(0.4) blur(1px)" }}
+          >
+            {/* Base image */}
+            <motion.img
+              src={`${import.meta.env.BASE_URL}HeroBanner.png`}
+              alt="Hero Banner"
+              draggable="false"
+              className="w-full h-full object-contain object-right opacity-20"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: [0, 0.2, 0.25, 0.2],
+                x: [0, -2, 2, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "loop",
+              }}
+            />
+
+            {/* Glitch layer 1 */}
+            <motion.img
+              src={`${import.meta.env.BASE_URL}HeroBanner.png`}
+              alt="Glitch Layer 1"
+              draggable="false"
+              className="w-full h-full object-contain object-right absolute top-0 left-0 mix-blend-screen opacity-10"
+              style={{ filter: "contrast(200%) hue-rotate(20deg)" }}
+              animate={{
+                x: [0, -5, 5, 0],
+                y: [0, 2, -2, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: "loop",
+              }}
+            />
+
+            {/* Glitch layer 2 */}
+            <motion.img
+              src={`${import.meta.env.BASE_URL}HeroBanner.png`}
+              alt="Glitch Layer 2"
+              draggable="false"
+              className="w-full h-full object-contain object-right absolute top-0 left-0 mix-blend-lighten opacity-10"
+              style={{ filter: " hue-rotate(-20deg)" }}
+              animate={{
+                x: [0, 3, -3, 0],
+                y: [0, -1, 1, 0],
+              }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                repeatType: "loop",
+              }}
+            />
+          </div>
+
+          {/* Gradient overlay stays unaffected */}
           <div
             className="absolute inset-0"
             style={{
@@ -176,29 +233,33 @@ const Hero = () => {
         {/* Enhanced Tech Stack with Staggered Animation */}
         <motion.div
           variants={itemVariants}
-          className="mt-10 flex flex-wrap justify-center gap-3 max-w-3xl mx-auto"
+          className="mt-5 flex flex-wrap justify-center gap-3 max-w-3xl mx-auto"
         >
-          {techStack.map(({ name, color }, index) => (
-            <motion.span
-              key={name}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8 + index * 0.05 }}
-              whileHover={{
-                scale: 1.1,
-                y: -4,
-                transition: { duration: 0.2, ease: "easeOut" },
-              }}
-              className={`px-4 py-2 text-sm font-medium rounded-full 
-                         bg-gradient-to-r ${color} bg-opacity-10 
-                         backdrop-blur-md border border-white/10 
-                         shadow-lg shadow-purple-500/5
-                         hover:shadow-purple-500/20 transition-all
-                         cursor-default select-none`}
-            >
-              {name}
-            </motion.span>
-          ))}
+          <motion.div
+            variants={itemVariants}
+            className="mt-5 flex flex-wrap justify-center gap-3 max-w-3xl mx-auto"
+          >
+            {techStack.map(({ name }, index) => (
+              <motion.span
+                key={name}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 + index * 0.05 }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 4px 15px rgba(255, 255, 255, 0.2)",
+                  transition: { duration: 0.25, ease: "easeOut" },
+                }}
+                className="px-5 py-2 text-sm font-medium rounded-full 
+                 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 
+                         backdrop-blur-lg border border-white/10 hover:border-white/20 
+                         shadow-lg shadow-purple-500/20 transition-all duration-300
+                         hover:shadow-purple-500/30 hover:-translate-y-1"
+              >
+                {name}
+              </motion.span>
+            ))}
+          </motion.div>
         </motion.div>
 
         {/* Enhanced Social Links with Hover Effects */}

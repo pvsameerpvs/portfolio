@@ -74,7 +74,7 @@ const Experience = () => {
         "Developed a links management system for restaurants in the Middle East with advanced analytics. Contributed to a POS system using XState for robust state management. Built and integrated frontend modules in the Leemify Dashboard with a Supabase backend using SWR.",
       achievements: [
         { text: "Improved code coverage to 90%", icon: Target },
-        { text: "Mentored junior developers", icon: Users },
+        // { text: "Mentored junior developers", icon: Users },
         {
           text: "Implemented key frontend modules in Leemify Dashboard with Supabase integration",
           icon: ArrowUpRight,
