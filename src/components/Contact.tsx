@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Mail, Send, ExternalLink, MessageSquare, Check } from "lucide-react";
 import { useForm } from "react-hook-form";
+import emailjs from "emailjs-com";
 
 type FormData = {
   name: string;
@@ -71,10 +72,35 @@ const Contact = () => {
   const inputFocusStyle =
     "focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 focus:bg-white/10";
 
+  // Single onSubmit handler
   const onSubmit = (data: FormData) => {
-    console.log("Form submitted:", data);
-    setShowPopup(true);
-    reset();
+    const currentTime = new Date().toLocaleString();
+
+    const templateParams = {
+      name: data.name,
+      email: data.email,
+      message: data.message,
+      time: currentTime,
+    };
+
+    emailjs
+      .send(
+        "service_dtpfn8h", // Your EmailJS service ID
+        "template_lltfljk", // Your EmailJS template ID
+        templateParams,
+        "tEVDjE8_Wjh8uG9r0" // Your EmailJS public key
+      )
+      .then(
+        (result) => {
+          console.log("Email successfully sent!", result.text);
+          setShowPopup(true);
+          reset();
+        },
+        (error) => {
+          console.error("Error sending email:", error.text);
+          // Optional: you can show error feedback here
+        }
+      );
   };
 
   return (

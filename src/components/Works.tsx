@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, Award, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useEffect } from "react";
+import WorkModal from "./WorkModal";
 
 const Works = () => {
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(
@@ -10,6 +11,20 @@ const Works = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showFullStack, setShowFullStack] = useState(false);
   const itemsPerPage = 6;
+  const [selectedWork, setSelectedWork] = useState<null | (typeof works)[0]>(
+    null
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = (work: (typeof works)[0]) => {
+    setSelectedWork(work);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedWork(null);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -53,8 +68,9 @@ const Works = () => {
         "Clean design",
         "UI Developer role",
         "SEO optimization",
-        "lead generation",
-        "fast load speed",
+        "Lead generation",
+        "Fast load speed",
+        "Responsive design",
       ],
       stack: "React, Tailwind CSS, JavaScript",
       url: "https://mashtree.com",
@@ -66,8 +82,9 @@ const Works = () => {
         "Clean design",
         "UI Developer role",
         "SEO optimization",
-        "lead generation",
-        "fast load speed",
+        "Lead generation",
+        "Fast load speed",
+        "Responsive design",
       ],
       stack: "React, Tailwind CSS, JavaScript",
       url: "https://ariflex.co/?nocache=1753187198915",
@@ -79,8 +96,9 @@ const Works = () => {
         "Clean design",
         "UI Developer role",
         "SEO optimization",
-        "lead generation",
-        "fast load speed",
+        "Lead generation",
+        "Fast load speed",
+        "Responsive design",
       ],
       stack: "HTML, CSS, JavaScript",
       url: "https://alkauntelecoms.com",
@@ -101,7 +119,7 @@ const Works = () => {
       ],
 
       stack:
-        "Next.js, TypeScript, Tailwind CSS, capacitor (mobile export), mui, react hook form, supabase",
+        "Next.js, TypeScript, Tailwind CSS, Capacitor (mobile export), MUI, React hook form, Supabase, SWR, Prisma",
       url: "https://app.leemify.com/pages/login/",
       imageUrl: "/Leemify.png", // Direct public folder path
     },
@@ -111,8 +129,9 @@ const Works = () => {
         "Clean design",
         "UI Developer role",
         "SEO optimization",
-        "lead generation",
-        "fast load speed",
+        "Lead generation",
+        "Fast load speed",
+        "Responsive design",
       ],
       stack: "HTML, CSS, JavaScript",
       url: "https://cydeztechnologies.com",
@@ -124,8 +143,9 @@ const Works = () => {
         "Clean design",
         "UI Developer role",
         "SEO optimization",
-        "lead generation",
-        "fast load speed",
+        "Lead generation",
+        "Fast load speed",
+        "Responsive design",
       ],
       stack: "WordPress, Custom CSS",
       url: "https://aspireitacademy.in",
@@ -155,10 +175,6 @@ const Works = () => {
         "UI Developer role",
         "SEO optimization",
         "Lead generation",
-        "Fast load speed",
-        "Video Call & Meeting App",
-        "Zoom-like experience",
-        "Real-time video chat",
         "Responsive design",
       ],
       stack: "HTML, CSS, JavaScript",
@@ -177,6 +193,7 @@ const Works = () => {
         "Lead generation strategies included",
         "Ensured fast load speed for smooth user experience",
         "Fully responsive design for mobile and desktop",
+        "Responsive design",
       ],
       stack:
         "Expo, GlueStack, Figma, React, Express.js, Supabase, Cloudflare R2 ,Figma",
@@ -185,7 +202,12 @@ const Works = () => {
     },
     {
       institution: "Spicy-Home",
-      highlights: ["Clean design", "UI Developer role", "SEO optimization"],
+      highlights: [
+        "Clean design",
+        "UI Developer role",
+        "SEO Optimization",
+        "Responsive design",
+      ],
       stack: "React, Tailwind CSS, TypeScript, Figma",
       url: "https://www.figma.com/proto/jlBUgLeTU1FHpmViWIBBY7/Spicy-Home---Website-Design?node-id=2-2&starting-point-node-id=2%3A2",
       imageUrl: "/Spicy-Home.png", // Direct public folder path
@@ -193,14 +215,24 @@ const Works = () => {
 
     {
       institution: "Ceycamax",
-      highlights: ["Clean design", "UI Developer role", "SEO optimization"],
+      highlights: [
+        "Clean design",
+        "UI Developer role",
+        "SEO Optimization",
+        "Responsive design",
+      ],
       stack: "HTML, CSS, JavaScript",
       url: "https://ceycamax.com/",
       imageUrl: "/Ceycamax.png", // Direct public folder path
     },
     {
       institution: "Lexusshipping",
-      highlights: ["Clean design", "UI Developer role", "SEO optimization"],
+      highlights: [
+        "Clean design",
+        "UI Developer role",
+        "SEO Optimization",
+        "Responsive design",
+      ],
       stack: "HTML, CSS, JavaScript",
       url: "https://lexusshipping.com/",
       imageUrl: "/lexusshipping.png", // Direct public folder path
@@ -280,10 +312,9 @@ const Works = () => {
             {currentWorks.map((work, index) => (
               <motion.div
                 key={`${work.institution}-${index}`}
+                onClick={() => handleOpenModal(work)}
                 variants={cardVariants}
-                className="bg-gray-800/60 border border-gray-700/50 rounded-2xl 
-                          overflow-hidden transform transition-all 
-                          hover:scale-[1.03] hover:shadow-2xl hover:border-cyan-500/30"
+                className="cursor-pointer bg-gray-800/60 border border-gray-700/50 rounded-2xl overflow-hidden transform transition-all hover:scale-[1.03] hover:shadow-2xl hover:border-cyan-500/30"
               >
                 <div className="p-6 relative">
                   <div className="absolute top-0 right-0 m-4 opacity-50">
@@ -292,7 +323,7 @@ const Works = () => {
 
                   {work.imageUrl && (
                     <a
-                      href={work.url}
+                      // href={work.url}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -337,7 +368,10 @@ const Works = () => {
 
                         {work.stack.split(",").length > 3 && (
                           <button
-                            onClick={() => setShowFullStack(!showFullStack)}
+                            onClick={(e) => {
+                              e.stopPropagation(); // ⛔️ Prevent modal open
+                              setShowFullStack(!showFullStack);
+                            }}
                             className="text-cyan-400 hover:underline mt-1 block"
                           >
                             {showFullStack ? "See less..." : "See more..."}
@@ -348,11 +382,12 @@ const Works = () => {
 
                     <div>
                       <button
-                        onClick={() =>
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setOpenDropdownIndex(
                             openDropdownIndex === index ? null : index
-                          )
-                        }
+                          );
+                        }}
                         className="flex items-center text-cyan-400 text-sm font-semibold focus:outline-none mb-1"
                       >
                         <span className="mr-1">Highlights</span>
@@ -382,6 +417,7 @@ const Works = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
+                      onClick={(e) => e.stopPropagation()} // ⛔️ Prevent modal open
                     >
                       Visit Project
                     </a>
@@ -389,6 +425,7 @@ const Works = () => {
                       href={work.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()} // ⛔️ Prevent modal open
                     >
                       <span className="text-sm text-gray-400 italic hover:text-white transition-colors duration-200">
                         {work.institution}
@@ -470,6 +507,11 @@ const Works = () => {
           </motion.div>
         )}
       </div>
+      <WorkModal
+        work={selectedWork}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </section>
   );
 };
